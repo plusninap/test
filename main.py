@@ -1,9 +1,22 @@
-from utils import greet, add_numbers, random_greet
+def parse_expression(expression):
+    parts = expression.split()
+    if len(parts) != 3:
+        raise ValueError("Неправильный формат. Используйте: число оператор число")
+    
+    try:
+        a = float(parts[0])
+        b = float(parts[2])
+    except ValueError:
+        raise ValueError("Оба аргумента должны быть числами")
+    
+    op = parts[1]
+    return a, op, b
 
-def main():
-    print(greet("Git Flow"))
-    print("2 + 3 =", add_numbers(2, 3))
-    print(random_greet())
-
-if __name__ == "__main__":
-    main()
+from utils import OPERATIONS
+user_input = input()
+a, op, b = parse_expression(user_input)
+if op in OPERATIONS:
+    result = OPERATIONS[op](a, b)
+    print(f"Результат: {result}")
+else:
+    print(f"Ошибка: Неподдерживаемая операция: {op}")
